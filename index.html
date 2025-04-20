@@ -5,9 +5,29 @@
         <title>TrevorKipkemboi</title>
      <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             
-       
+             * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+             }
+             body {
+                overflow-x: 
+             }
+            .home {
+                position:absolute;
+                top: 20px;
+                right:150px;
+                font-family: 'jost', sans-serif;
+                font-size: 20px;
+                color: black;
+                font-weight: bold;
+                text-decoration: none;
+                
+
+            }
             .about-me {
                 position: absolute;
                 top: 20px;
@@ -28,8 +48,30 @@
                 flex-direction:column;
                 text-align: center;
             }
+            #name, #title {
+                transition: transform 0.8s ease, opacity 0.8s ease;
+            }
+            
+            .slide-away-right {
+                transform: translateX(150%);
+                opacity: 0;
+            }
+
+            .slide-away-left {
+                transform: translateX(-150%);
+                opacity: 0;
+            }
+            
             #projects{
-                background-color: #B8D98A;
+               /* background-color: #ddffad;*/
+               background-image: url(MyWebsitepics/david-gavi-BhCZ2q9hXUw-unsplash.jpg);
+               background-position: center;
+               background-size: cover;
+               background-repeat: no-repeat;
+
+               color: #D9D9D9;
+               
+
                 min-height:100vh;
                 margin-top:10px; /*check about this later*/
                 display: block;
@@ -39,7 +81,13 @@
                 padding:30px 150px;
                 font-family: 'Jost', sans-serif;
                 width:100%;
-               
+            
+            }
+            #projects .overlay{
+                background-color: r gba(0, 0, 0, 0.5);
+                padding: 30px 150px;
+                min-height: 100vh;
+                color:white;
             }
             .project-content {
                display: flex; /*enables flex*/
@@ -157,9 +205,35 @@
                     max-width: 300px;
                 }
             }
-           
-            
-            
+            @keyframes bulgeIn {
+                0%{
+                    opacity: 0;
+                    transform: scaleY(0.6) translateY(100px);
+                }
+                60% {
+                    transform: scaleY(1.1) translateY(-10px);
+                }
+                80% {
+                    transform: scaleY(0.95) translateY(5px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scaleY(1) translateY(0);
+                }
+            }
+           .bulge-in{
+            opacity: 0;
+            transform: scaleY(0.6) translateY(100px);
+            transition: opacity 0.8s ease;
+           }
+
+           .bulge-in.visible {
+           animation: bulgeIn 0.9s ease-out forwards;
+           }
+    
+            html {
+            scroll-behavior:smooth;
+        }
             
         </style>
     </head>
@@ -167,15 +241,16 @@
     <body>
         <header>
             <a href="aboutme.html" class="about-me">About Me</a>
+            <a href="index.html" class="home">Home</a>
         </header>
     <section id="hero">
        
-        <h1>Trevor Kipkemboi</h1>
-        <h2>Software Engineer</h2>
+        <h1 id="name">Trevor Kipkemboi</h1>
+        <h2 id="title">Software Engineer</h2>
         
     </section>
         
-    <section id="projects">
+    <section id="projects" class="bulge-in">
         <h2>AGRi Buzz project</h2>
            <div class="project-content">
    
@@ -200,14 +275,14 @@
     <section id="designing">
         <div class="designing">
             <p>All the way from designing...</p>
-            <img class="responsive-img" src="MyWebsitepics/Screenshot_20250403_012507.png" width="600" height="350">
+            <img class="responsive-img" src="MyWebsitepics/Screenshot_20250403_012507.png" width="900" height="450">
         </div>
     </section>
     
     <section id="coding">
         <div class="coding">
             <p>...to coding all the way.</p>
-            <img class="responsive-img" src="MyWebsitepics/Screenshot_20250404_015959.png" width="600" height="350">
+            <img class="responsive-img" src="MyWebsitepics/Screenshot_20250404_015959.png" width="900" height="450">
         </div>
     </section>
      
@@ -219,4 +294,35 @@
         <a href="https://wa.me/+254717715823" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
      </section>
+    
+     <script>
+        const nameEl = document.getElementById('name');
+        const titleEl = document.getElementById('title');
+        const projectsSection = document.getElementById('projects');
+
+        window.addEventListener('scroll', () => {
+            const heroSection = document.getElementById('hero');
+            const scrollY = window.scrollY;
+
+            if (scrollY > heroSection.offsetHeight / 2) {
+                nameEl.classList.add('slide-away-right');
+                titleEl.classList.add('slide-away-left');
+            } else {
+                nameEl.classList.remove('slide-away-right');
+                titleEl.classList.remove('slide-away-left');
+            }
+
+            //Triger bulge animation for project section
+            const triggerPoint = window.innerHeight * 0.7; /*70% of the screen*/
+            const projectsTop = projectsSection.getBoundingClientRect().top;
+
+            if (projectsTop < triggerPoint) {
+                projectsSection.classList.add('visible');
+                
+            }
+        });
+     </script>
+    
+    
     </body>  
+    </html>
